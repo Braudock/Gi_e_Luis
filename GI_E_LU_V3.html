@@ -169,7 +169,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            /* CORREÇÃO: Removido ../FOTOS/ pois a imagem está na raiz */
+            /* CORREÇÃO: Removido ../FOTOS/ para funcionar na raiz */
             background: url('CAPA.jpg') center/cover no-repeat;
             opacity: 0.4;
             z-index: -1;
@@ -538,7 +538,7 @@
         }
 
         // CARREGA AUTOMATICAMENTE IMAGEM1.jpg ATÉ IMAGEM49.jpg
-        // CORREÇÃO: Removido ../FOTOS/
+        // CORREÇÃO: Removido ../FOTOS/ para funcionar na raiz
         for (let i = 1; i <= 49; i++) {
             addPhoto(`IMAGEM${i}.jpg`);
         }
