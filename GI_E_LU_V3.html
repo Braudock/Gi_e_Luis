@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gisele & Luis | Nossa Eternidade</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <style>
+        :root {
+            --primary: #d4af37; /* Gold */
+            --primary-light: #fbe6a8;
+            --accent: #e1adac; /* Soft Rose */
+            --bg-dark: #0f0f11;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-main: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- INTRO OVERLAY --- */
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        #intro-btn {
+            margin-top: 30px;
+            padding: 15px 50px;
+            font-size: 1.5rem;
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        #intro-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000 100%);
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            opacity: var(--opacity);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: var(--opacity); transform: scale(1); }
+            50% { opacity: 0; transform: scale(0.5); }
+        }
+
+        .hearts-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 20px;
+            color: rgba(225, 173, 172, 0.6);
+            animation: float-up linear forwards;
+        }
+
+        @keyframes float-up {
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- MUSIC PLAYER --- */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .music-player:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: var(--primary);
+        }
+
+        .play-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-main);
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* CAPA BACKGROUND CONFIGURATION */
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            /* CAMINHO DA CAPA (Fica em ../FOTOS) */
+            background: url('../FOTOS/CAPA.jpg') center/cover no-repeat;
+            opacity: 0.4;
+            z-index: -1;
+            filter: blur(2px) contrast(1.1);
+        }
+
+        .hero-border {
+            position: absolute;
+            top: 30px; bottom: 30px; left: 30px; right: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #cfc09f, #ffecb3, #c8b070);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--accent);
+            margin-bottom: 40px;
+            z-index: 2;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: var(--font-script);
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+        }
+
+        .history-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px;
+            text-align: center;
+            border-radius: 4px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .history-card::before {
+            content: '"';
+            font-family: var(--font-display);
+            font-size: 10rem;
+            position: absolute;
+            top: -20px; left: 20px;
+            color: rgba(212, 175, 55, 0.1);
+            line-height: 0;
+        }
+
+        .history-text {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--text-main);
+            margin-bottom: 30px;
+        }
+
+        /* --- COUNTERS --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        /* --- GALLERY --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1/1;
+            background: #222;
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+            z-index: 2;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s, opacity 0.8s;
+            opacity: 0.85;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-primary {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728);
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* --- MODAL (Better than alert) --- */
+        #loveModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+        #loveModal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            padding: 40px;
+            border: 1px solid var(--primary);
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #loveModal.active .modal-content {
+            transform: scale(1);
+        }
+
+        /* --- UTILS --- */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media(max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .section-title { font-size: 3rem; }
+            .hero-border { top: 15px; bottom: 15px; left: 15px; right: 15px; }
+            .history-text { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Intro Overlay -->
+    <div id="intro-overlay">
+        <h1 style="font-size: 3rem; margin-bottom:10px;">Gisele & Luis</h1>
+        <div style="color:var(--text-muted); letter-spacing: 2px;">Clique para entrar no nosso mundo</div>
+        <button id="intro-btn" onclick="startExperience()">Entrar</button>
+    </div>
+
+    <!-- Background Effects -->
+    <div class="stars-bg" id="starsBg"></div>
+    <div class="hearts-container" id="heartsValues"></div>
+
+    <!-- Music Player -->
+    <div class="music-player" onclick="toggleMusic()">
+        <svg class="play-icon" id="playIcon" viewBox="0 0 24 24">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+        </svg>
+        <span id="musicText" style="font-size:0.9rem; font-weight:500; color: var(--primary);">Nossa Vibe</span>
+    </div>
+
+    <!-- Audio Element -->
+    <!-- CORREÇÃO: Aponta para ../MUSICA com o nome exato -->
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="../MUSICA/Ne-Yo_TinyDesk_Recorte.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Custom Love Modal -->
+    <div id="loveModal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 style="font-family: var(--font-script); color: var(--primary); font-size: 3rem; margin-bottom: 20px;">Eu te amo! ❤️</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1rem;">Você é o melhor presente que a vida me deu.</p>
+            <button class="btn-primary" onclick="closeModal()">Sempre</button>
+        </div>
+    </div>
+
+    <!-- Hero Header -->
+    <header>
+        <div class="hero-border"></div>
+        <div class="fade-in-up">
+            <h1>Gisele & Luis</h1>
+            <div class="subtitle">Um Amor Escrito nas Estrelas</div>
+
+            <button class="btn-primary" onclick="document.getElementById('story').scrollIntoView()">
+                Nossa História
+            </button>
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('story').scrollIntoView()">
+            &#8595;
+        </div>
+    </header>
+
+    <!-- Nossa História -->
+    <section id="story">
+        <h2 class="section-title fade-in-up">O Começo</h2>
+        <div class="section-subtitle fade-in-up">Onde tudo faz sentido</div>
+
+        <div class="history-card fade-in-up">
+            <p class="history-text">
+                "No dia <strong>05 de Dezembro de 2025</strong>, o destino cruzou nossos caminhos.
+                Não foi apenas um encontro, foi o reconhecimento de almas que se buscavam.
+                Desde então, cada segundo ao seu lado é uma eternidade que desejo repetir."
+            </p>
+            <p style="color:var(--primary); font-family:var(--font-script); font-size:2rem; margin-top:20px;">
+                Para sempre nós.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contadores -->
+    <section>
+        <div class="stats-grid">
+            <div class="stat-item fade-in-up">
+                <div class="stat-number" id="daysCounter">0</div>
+                <div class="stat-label">Dias de Amor</div>
+            </div>
+            <div class="stat-item fade-in-up" style="transition-delay: 0.2s">
+                <div class="stat-number" id="hoursCounter">0</div>
+                <div class="stat-label">Horas Juntos</div>
+            </div>
+            <div class="stat-item fade-in-up" style="transition-delay: 0.4s">
+                <div class="stat-number" id="countdown">Loading...</div>
+                <div class="stat-label">Para o Grande Dia (20/03/26)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section>
+        <h2 class="section-title fade-in-up">Nossos Momentos</h2>
+        <div class="section-subtitle fade-in-up">Memórias que aquecem o coração</div>
+
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Images injected via JS -->
+        </div>
+    </section>
+
+    <!-- Mensagem Final -->
+    <section class="love-note fade-in-up" style="margin-bottom: 50px; text-align: center;">
+        <h2 class="section-title">Minha Promessa</h2>
+        <p class="history-text" style="font-size:1.4rem;">
+            Escolho você hoje, amanhã e em todas as vidas que vierem.
+            Meu coração é, e sempre será, sua casa.
+        </p>
+        <button class="btn-primary" onclick="openModal()">Declarar Amor</button>
+    </section>
+
+    <footer style="text-align:center; padding: 40px; border-top: 1px solid rgba(255,255,255,0.05); font-size:0.8rem; color:#555;">
+        FEITO COM AMOR PARA GISELE & LUIS &copy; 2025
+    </footer>
+
+    <script>
+        // --- SETUP GALLERY AUTOMÁTICO E SIMPLIFICADO ---
+        const galleryGrid = document.getElementById('galleryGrid');
+
+        function addPhoto(src) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item fade-in-up';
+            item.innerHTML = `
+                <img src="${src}"
+                     alt="Nosso Momento"
+                     loading="lazy"
+                     onerror="this.parentElement.remove();">
+            `;
+            galleryGrid.appendChild(item);
+        }
+
+        // CARREGA AUTOMATICAMENTE IMAGEM1.jpg ATÉ IMAGEM49.jpg
+        for (let i = 1; i <= 49; i++) {
+            addPhoto(`../FOTOS/IMAGEM${i}.jpg`);
+        }
+
+        // --- MUSIC LOGIC ---
+        const audio = document.getElementById('bgMusic');
+        const playIcon = document.getElementById('playIcon').querySelector('path');
+        const musicText = document.getElementById('musicText');
+        const playPath = "M8 5v14l11-7z";
+        const pausePath = "M6 19h4V5H6v14zm8-14v14h4V5h-4z";
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play().catch(e => console.log("Erro ao tocar. Verifique se clicou em 'Entrar' ou o arquivo existe."));
+                playIcon.setAttribute('d', pausePath);
+                musicText.innerText = "Tocando...";
+                musicText.style.color = "var(--primary)";
+            } else {
+                audio.pause();
+                playIcon.setAttribute('d', playPath);
+                musicText.innerText = "Pausado";
+                musicText.style.color = "var(--text-muted)";
+            }
+        }
+
+        // --- EXPERIENCE START ---
+        function startExperience() {
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.visibility = 'hidden';
+            }, 1000);
+
+            // Tentar tocar
+            audio.play().then(() => {
+                playIcon.setAttribute('d', pausePath);
+                musicText.innerText = "Tocando...";
+            }).catch(e => {
+                console.log("Aguardando interação do usuário para tocar som.");
+            });
+        }
+
+        // --- MODAL LOGIC ---
+        function openModal() {
+            document.getElementById('loveModal').classList.add('active');
+            createHeartExplosion();
+        }
+        function closeModal() {
+            document.getElementById('loveModal').classList.remove('active');
+        }
+
+        function createHeartExplosion() {
+            for(let i=0; i<15; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        }
+
+        // --- FLOATING HEARTS ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('floating-heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.getElementById('heartsValues').appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(createHeart, 800);
+
+        // --- STARS BACKGROUND ---
+        const starsContainer = document.getElementById('starsBg');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            const size = Math.random() * 2 + 1;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            star.style.setProperty('--opacity', Math.random());
+            starsContainer.appendChild(star);
+        }
+
+        // --- COUNTERS ---
+        const startDate = new Date('2025-12-05T00:00:00');
+        const targetDate = new Date('2026-03-20T00:00:00'); // Data do Casamento
+
+        function updateCounters() {
+            const now = new Date();
+            
+            // Time together
+            const diff = now - startDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            
+            // Countdown Casamento
+            const diffTarget = targetDate - now;
+            const daysLeft = Math.floor(diffTarget / (1000 * 60 * 60 * 24));
+
+            if(document.getElementById('daysCounter')) document.getElementById('daysCounter').innerText = Math.max(0, days);
+            if(document.getElementById('hoursCounter')) document.getElementById('hoursCounter').innerText = Math.max(0, hours);
+            if(document.getElementById('countdown')) document.getElementById('countdown').innerText = Math.max(0, daysLeft) + 'd';
+        }
+        setInterval(updateCounters, 1000);
+        updateCounters();
+
+        // --- SCROLL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
