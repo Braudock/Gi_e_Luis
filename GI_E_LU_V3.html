@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gisele & Luis | Nossa Eternidade</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
     <style>
         :root {
             --primary: #d4af37; /* Gold */
@@ -171,8 +169,8 @@
             content: '';
             position: absolute;
             inset: 0;
-            /* CAMINHO DA CAPA (Fica em ../FOTOS) */
-            background: url('../FOTOS/CAPA.jpg') center/cover no-repeat;
+            /* CORREÇÃO: Removido ../FOTOS/ pois a imagem está na raiz */
+            background: url('CAPA.jpg') center/cover no-repeat;
             opacity: 0.4;
             z-index: -1;
             filter: blur(2px) contrast(1.1);
@@ -426,18 +424,15 @@
 
 <body>
 
-    <!-- Intro Overlay -->
     <div id="intro-overlay">
         <h1 style="font-size: 3rem; margin-bottom:10px;">Gisele & Luis</h1>
         <div style="color:var(--text-muted); letter-spacing: 2px;">Clique para entrar no nosso mundo</div>
         <button id="intro-btn" onclick="startExperience()">Entrar</button>
     </div>
 
-    <!-- Background Effects -->
     <div class="stars-bg" id="starsBg"></div>
     <div class="hearts-container" id="heartsValues"></div>
 
-    <!-- Music Player -->
     <div class="music-player" onclick="toggleMusic()">
         <svg class="play-icon" id="playIcon" viewBox="0 0 24 24">
             <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
@@ -445,13 +440,10 @@
         <span id="musicText" style="font-size:0.9rem; font-weight:500; color: var(--primary);">Nossa Vibe</span>
     </div>
 
-    <!-- Audio Element -->
-    <!-- CORREÇÃO: Aponta para ../MUSICA com o nome exato -->
     <audio id="bgMusic" preload="auto" loop>
-        <source src="../MUSICA/Ne-Yo_TinyDesk_Recorte.mp3" type="audio/mpeg">
+        <source src="Ne-Yo_TinyDesk_Recorte.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Custom Love Modal -->
     <div id="loveModal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2 style="font-family: var(--font-script); color: var(--primary); font-size: 3rem; margin-bottom: 20px;">Eu te amo! ❤️</h2>
@@ -460,7 +452,6 @@
         </div>
     </div>
 
-    <!-- Hero Header -->
     <header>
         <div class="hero-border"></div>
         <div class="fade-in-up">
@@ -476,7 +467,6 @@
         </div>
     </header>
 
-    <!-- Nossa História -->
     <section id="story">
         <h2 class="section-title fade-in-up">O Começo</h2>
         <div class="section-subtitle fade-in-up">Onde tudo faz sentido</div>
@@ -493,7 +483,6 @@
         </div>
     </section>
 
-    <!-- Contadores -->
     <section>
         <div class="stats-grid">
             <div class="stat-item fade-in-up">
@@ -511,17 +500,14 @@
         </div>
     </section>
 
-    <!-- Galeria -->
     <section>
         <h2 class="section-title fade-in-up">Nossos Momentos</h2>
         <div class="section-subtitle fade-in-up">Memórias que aquecem o coração</div>
 
         <div class="gallery-grid" id="galleryGrid">
-            <!-- Images injected via JS -->
-        </div>
+            </div>
     </section>
 
-    <!-- Mensagem Final -->
     <section class="love-note fade-in-up" style="margin-bottom: 50px; text-align: center;">
         <h2 class="section-title">Minha Promessa</h2>
         <p class="history-text" style="font-size:1.4rem;">
@@ -552,8 +538,9 @@
         }
 
         // CARREGA AUTOMATICAMENTE IMAGEM1.jpg ATÉ IMAGEM49.jpg
+        // CORREÇÃO: Removido ../FOTOS/
         for (let i = 1; i <= 49; i++) {
-            addPhoto(`../FOTOS/IMAGEM${i}.jpg`);
+            addPhoto(`IMAGEM${i}.jpg`);
         }
 
         // --- MUSIC LOGIC ---
@@ -671,4 +658,5 @@
         document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
     </script>
 </body>
+
 </html>
