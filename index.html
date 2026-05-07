@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Paula & Luis | Nossa Eternidade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a96e;--gold-light:#e8d5a3;--rose:#d47fa0;--dark:#0a0608}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:#f0e8df;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
+
+/* INTRO */
+#intro{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--dark);transition:opacity 1.2s ease}
+#intro.hidden{opacity:0;pointer-events:none}
+.mono{font-family:'Great Vibes',cursive;font-size:clamp(4rem,12vw,9rem);color:var(--gold);animation:fadeUp 1.4s ease both}
+.sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--gold-light);opacity:.7;margin-top:8px;letter-spacing:6px;text-transform:uppercase;animation:fadeUp 1.6s .2s ease both}
+.enter-btn{margin-top:48px;padding:14px 44px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .4s;animation:fadeUp 1.8s .4s ease both}
+.enter-btn:hover{background:var(--gold);color:var(--dark)}
+
+/* VIDEO BG */
+#video-bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#000}
+#video-bg video{position:absolute;top:50%;left:50%;width:100%;height:100%;object-fit:cover;transform:translate(-50%,-50%)}
+.overlay{position:fixed;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(10,6,8,.7) 0%,rgba(10,6,8,.45) 40%,rgba(10,6,8,.45) 60%,rgba(10,6,8,.88) 100%)}
+.grain{position:fixed;inset:0;z-index:2;opacity:.04;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* MUSIC BTN */
+#music-btn{position:fixed;top:24px;right:24px;z-index:1000;width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,169,110,.4);background:rgba(10,6,8,.65);backdrop-filter:blur(12px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;color:var(--gold)}
+#music-btn:hover{border-color:var(--gold);background:rgba(201,169,110,.15)}
+.music-label{position:fixed;top:32px;right:82px;z-index:1000;font-family:'Cormorant Garamond',serif;font-size:.75rem;color:var(--gold-light);opacity:.6;letter-spacing:3px;text-transform:uppercase}
+
+/* MAIN */
+main{position:relative;z-index:10}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative}
+.hero-date{font-family:'Cormorant Garamond',serif;font-size:.85rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);opacity:.8;animation:fadeUp 1s .2s both}
+.hero-title{font-family:'Great Vibes',cursive;font-size:clamp(3.5rem,10vw,8rem);color:#fff;text-shadow:0 0 60px rgba(201,169,110,.3);line-height:1.1;margin:16px 0;animation:fadeUp 1s .4s both}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.3rem);color:var(--gold-light);letter-spacing:4px;text-transform:uppercase;font-style:italic;opacity:.9;animation:fadeUp 1s .6s both}
+.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gold);opacity:.5;animation:pulse 2s infinite}
+.scroll-hint span{font-family:'Cormorant Garamond',serif;font-size:.7rem;letter-spacing:4px;text-transform:uppercase}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent)}
+
+/* SECTIONS */
+.sec{padding:90px 24px;max-width:880px;margin:0 auto}
+.sec-label{font-family:'Cormorant Garamond',serif;font-size:.72rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:16px}
+.sec-title{font-family:'Great Vibes',cursive;font-size:clamp(2.4rem,6vw,4.5rem);color:var(--gold-light);margin-bottom:32px}
+.divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 48px}
+
+/* CHAPTERS */
+.chapters{display:flex;flex-direction:column;gap:0}
+.chapter{display:grid;grid-template-columns:56px 1fr;gap:0 28px;padding:44px 0;border-bottom:1px solid rgba(201,169,110,.1)}
+.chapter:last-child{border-bottom:none}
+.ch-num{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);opacity:.22;font-weight:300;line-height:1;padding-top:4px}
+.ch-label{font-family:'Cormorant Garamond',serif;font-size:.68rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);opacity:.6;margin-bottom:8px;display:block}
+.ch-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.5vw,1.9rem);color:#fff;font-weight:300;margin-bottom:18px}
+.ch-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.7vw,1.18rem);line-height:2;color:rgba(240,232,223,.72);font-style:italic}
+.ch-text em{color:var(--gold-light);font-style:normal}
+.ch-text a{color:var(--gold-light);text-decoration:none;border-bottom:1px solid rgba(232,213,163,.3)}
+.ch-text a:hover{border-color:var(--gold-light)}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;padding:60px 24px 80px;max-width:880px;margin:0 auto}
+.stat{text-align:center;padding:36px 20px;border:1px solid rgba(201,169,110,.15);border-radius:4px;background:rgba(201,169,110,.03);backdrop-filter:blur(8px);transition:all .4s}
+.stat:hover{border-color:rgba(201,169,110,.4);transform:translateY(-4px)}
+.stat-num{font-family:'Great Vibes',cursive;font-size:3.2rem;color:var(--gold);display:block;line-height:1}
+.stat-label{font-family:'Cormorant Garamond',serif;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);opacity:.6;margin-top:6px;display:block}
+
+/* GALLERY */
+.gallery-wrap{padding:80px 24px;max-width:1100px;margin:0 auto}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px}
+.g-item{position:relative;overflow:hidden;aspect-ratio:1;cursor:pointer}
+.g-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s,filter .4s;display:block}
+.g-item:hover img{transform:scale(1.08);filter:brightness(1.1)}
+.g-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,6,8,.6),transparent);opacity:0;transition:opacity .4s}
+.g-item:hover::after{opacity:1}
+
+/* LIGHTBOX */
+#lb{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center}
+#lb.open{display:flex}
+#lb img{max-width:90vw;max-height:90vh;object-fit:contain}
+.lb-x{position:absolute;top:20px;right:28px;font-size:2rem;color:var(--gold);cursor:pointer;background:none;border:none;line-height:1}
+.lb-p,.lb-n{position:absolute;top:50%;transform:translateY(-50%);background:none;border:1px solid rgba(201,169,110,.3);color:var(--gold);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:1.1rem;transition:all .3s}
+.lb-p{left:20px}.lb-n{right:20px}
+.lb-p:hover,.lb-n:hover{background:rgba(201,169,110,.15)}
+
+/* PROMISE */
+.promise{padding:110px 24px;text-align:center}
+.promise-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2vw,1.55rem);line-height:2;color:rgba(240,232,223,.85);font-style:italic;max-width:680px;margin:0 auto 40px}
+.promise-sig{font-family:'Great Vibes',cursive;font-size:3rem;color:var(--gold);margin-bottom:40px;display:block}
+.heart-btn{padding:15px 44px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.05rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .4s}
+.heart-btn:hover{background:var(--gold);color:var(--dark)}
+
+/* MODAL */
+#modal{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;text-align:center}
+#modal.open{display:flex}
+.modal-box{padding:56px 36px;border:1px solid rgba(201,169,110,.3);max-width:460px;backdrop-filter:blur(20px)}
+.modal-box h2{font-family:'Great Vibes',cursive;font-size:3.8rem;color:var(--gold);margin-bottom:16px}
+.modal-box p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold-light);line-height:1.9;font-style:italic}
+.modal-x{margin-top:28px;padding:10px 30px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1rem;letter-spacing:2px;cursor:pointer;border-radius:2px;transition:all .3s}
+.modal-x:hover{background:var(--gold);color:var(--dark)}
+
+/* FOOTER */
+footer{padding:40px 24px;text-align:center;border-top:1px solid rgba(201,169,110,.1)}
+footer p{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gold-light);opacity:.45;letter-spacing:2px}
+
+/* HEARTS */
+.hp{position:fixed;pointer-events:none;z-index:9999;animation:floatH 2s ease-out forwards}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes floatH{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-150px) scale(1.3)}}
+
+@media(max-width:600px){
+  .chapter{grid-template-columns:36px 1fr;gap:0 14px}
+  .ch-num{font-size:2.2rem}
+  .stats{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="mono">P &amp; L</div>
+  <div class="sub">Paula &amp; Luis</div>
+  <button class="enter-btn" onclick="enterSite()">Entrar</button>
+</div>
+
+<!-- VIDEO BACKGROUND (local) -->
+<div id="video-bg">
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="gemini_generated_video_008672ca.mp4" type="video/mp4"/>
+    <source src="gemini_generated_video_27b83ec3.mp4" type="video/mp4"/>
+    <source src="VID-20260506-WA0054.mp4" type="video/mp4"/>
+  </video>
+</div>
+<div class="overlay"></div>
+<div class="grain"></div>
+
+<!-- AUDIO: YouTube player oculto (Ne-Yo Tiny Desk) -->
+<iframe id="yt-audio"
+  src="about:blank"
+  style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;top:-9999px"
+  allow="autoplay; encrypted-media"
+  frameborder="0">
+</iframe>
+
+<!-- MUSIC BTN -->
+<div class="music-label">Nossa Vibe</div>
+<button id="music-btn" onclick="toggleMusic()" title="Música">
+  <svg id="ico-play" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
+  <svg id="ico-pause" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+</button>
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <button class="lb-x" onclick="closeLb()">✕</button>
+  <button class="lb-p" onclick="lbNav(-1)">&#8592;</button>
+  <img id="lb-img" src="" alt=""/>
+  <button class="lb-n" onclick="lbNav(1)">&#8594;</button>
+</div>
+
+<!-- MODAL -->
+<div id="modal">
+  <div class="modal-box">
+    <h2>Eu te amo</h2>
+    <p>Em qualquer dança.<br/>Em qualquer vida.<br/>Sempre você.</p>
+    <button class="modal-x" onclick="closeModal()">Fechar</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-date">02 de Maio · 2026 · Velho Pietro</span>
+    <h1 class="hero-title">Paula &amp; Luis</h1>
+    <p class="hero-sub">Uma noite que mudou tudo</p>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Rolar</span>
+    </div>
+  </section>
+
+  <!-- HISTÓRIA -->
+  <section class="sec" style="text-align:center">
+    <span class="sec-label">Nossa história</span>
+    <h2 class="sec-title">A Noite do Pietro</h2>
+    <div class="divider"></div>
+    <div class="chapters">
+
+      <div class="chapter">
+        <div class="ch-num">I</div>
+        <div>
+          <span class="ch-label">O Encontro · 02.05.2026</span>
+          <h3 class="ch-title">Velho Pietro</h3>
+          <p class="ch-text">Era uma noite comum no <em><a href="https://velhopietro.com/" target="_blank">Velho Pietro</a></em> — aquela casa que pulsa de música latina, onde o ar cheira a cumbia e os pés mal tocam o chão. Eu não sabia que aquela noite seria diferente de todas as outras. Ela era Paula.</p>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="ch-num">II</div>
+        <div>
+          <span class="ch-label">A Dança</span>
+          <h3 class="ch-title">Ela sabia. Eu não.</h3>
+          <p class="ch-text">Paula dança como quem já nasceu sabendo. Eu não. Mas ela ficou — com <em>paciência infinita</em>, com um sorriso que não julgava, com os passos que me guiavam mesmo quando eu errava o compasso. E naquele descompasso, a gente foi se encaixando.</p>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="ch-num">III</div>
+        <div>
+          <span class="ch-label">Os Olhos Fechados</span>
+          <h3 class="ch-title">"Fecha os olhos e me sente"</h3>
+          <p class="ch-text">Em algum momento ela pediu: <em>"fecha os olhos"</em>. E eu fechei. O mundo desapareceu. Não havia mais piso, não havia mais música, não havia mais sala. Havia só o calor dela, o toque dos nossos corpos — e algo que reconheci como real.</p>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="ch-num">IV</div>
+        <div>
+          <span class="ch-label">O Mergulho</span>
+          <h3 class="ch-title">Perdi-me no fundo dos seus olhos</h3>
+          <p class="ch-text">Quando abri os olhos e olhei fundo nos dela — <em>eu não estava mais ali</em>. Me perdi. Como quem cai devagar, sem pressa de chegar ao fundo. Um fio invisível que nos amarrava cada vez mais.</p>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="ch-num">V</div>
+        <div>
+          <span class="ch-label">A Despedida</span>
+          <h3 class="ch-title">Que parecia reencontro</h3>
+          <p class="ch-text">Quando a noite acabou e nos despedimos, havia algo estranho naquele adeus — <em>parecia que já nos conhecíamos há muito tempo</em>. Como se aquela despedida fosse apenas uma pausa numa história que já havia começado antes de nós sabermos.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><span class="stat-num" id="days-count">0</span><span class="stat-label">Dias de Nós</span></div>
+    <div class="stat"><span class="stat-num" id="hours-count">0</span><span class="stat-label">Horas Desde o Olhar</span></div>
+    <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Momentos a Viver</span></div>
+  </div>
+
+  <!-- GALERIA -->
+  <div class="gallery-wrap">
+    <div style="text-align:center;margin-bottom:52px">
+      <span class="sec-label">Nossa galeria</span>
+      <h2 class="sec-title">Memórias</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="gallery-grid" id="gallery"></div>
+  </div>
+
+  <!-- PROMESSA -->
+  <section class="promise">
+    <span class="sec-label">Minha Promessa</span>
+    <h2 class="sec-title">Para você</h2>
+    <div class="divider"></div>
+    <p class="promise-text">"Quero descobrir contigo cada compasso.<br/>Aprender contigo cada passo.<br/>E me perder contigo, vez após vez,<br/>a cada olhar — como naquela primeira noite no Pietro."</p>
+    <span class="promise-sig">Luis</span>
+    <button class="heart-btn" onclick="openModal()">💕 Declarar Amor</button>
+  </section>
+
+</main>
+
+<footer><p>Feito com amor para Paula &amp; Luis · 02.05.2026</p></footer>
+
+<script>
+// YouTube Audio IDs (Ne-Yo Tiny Desk — fallbacks)
+const audioIds = ['1G8DFGDEu50','gZtzidklVIY','uRjaQCuKLTs'];
+let audioIdx = 0, ytPlayer = null, musicOn = false;
+
+function loadYTAudio(idx) {
+  const fr = document.getElementById('yt-audio');
+  fr.src = `https://www.youtube.com/embed/${audioIds[idx]}?autoplay=1&controls=0&loop=1&playlist=${audioIds[idx]}&enablejsapi=1`;
+}
+
+// ENTER
+function enterSite() {
+  const intro = document.getElementById('intro');
+  intro.classList.add('hidden');
+  setTimeout(() => intro.style.display = 'none', 1300);
+  document.getElementById('bg-video').play().catch(()=>{});
+  loadYTAudio(audioIdx);
+  musicOn = true;
+  document.getElementById('ico-play').style.display='none';
+  document.getElementById('ico-pause').style.display='block';
+}
+
+// MUSIC TOGGLE
+function toggleMusic(){
+  const fr=document.getElementById('yt-audio');
+  const ip=document.getElementById('ico-play'),ipa=document.getElementById('ico-pause');
+  if(musicOn){
+    fr.src='about:blank'; musicOn=false;
+    ip.style.display='block'; ipa.style.display='none';
+  } else {
+    loadYTAudio(audioIdx); musicOn=true;
+    ip.style.display='none'; ipa.style.display='block';
+  }
+}
+
+// GALLERY
+const photos=[
+  '1778079239145.png','1778079454513.png','1778079605066.png',
+  '1778079900693.png','1778079900693 (1).png','1778080251852.png',
+  '1778080329092.png','1778080588991.png','1778080778987.png',
+  '1778081067634.png','1778081067634 (1).png','1778081232072.png',
+  '1778081357066.png'
+];
+const grid=document.getElementById('gallery');
+photos.forEach((src,i)=>{
+  const d=document.createElement('div');
+  d.className='g-item';
+  d.innerHTML=`<img src="${src}" alt="Foto ${i+1}" loading="lazy" onerror="this.parentElement.style.display='none'"/>`;
+  d.onclick=()=>openLb(i);
+  grid.appendChild(d);
+});
+
+// LIGHTBOX
+let lbI=0;
+function openLb(i){lbI=i;document.getElementById('lb-img').src=photos[i];document.getElementById('lb').classList.add('open');}
+function closeLb(){document.getElementById('lb').classList.remove('open');}
+function lbNav(d){lbI=(lbI+d+photos.length)%photos.length;document.getElementById('lb-img').src=photos[lbI];}
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lb').classList.contains('open'))return;
+  if(e.key==='ArrowLeft')lbNav(-1);
+  if(e.key==='ArrowRight')lbNav(1);
+  if(e.key==='Escape')closeLb();
+});
+
+// MODAL
+function openModal(){document.getElementById('modal').classList.add('open');spawnHearts();}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+function spawnHearts(){
+  ['💕','✨','💖','🌹','💫','❤️'].forEach((e,i)=>{
+    for(let j=0;j<3;j++){
+      setTimeout(()=>{
+        const h=document.createElement('div');
+        h.className='hp';h.textContent=e;
+        h.style.left=Math.random()*100+'vw';h.style.bottom='8vh';
+        h.style.fontSize=(0.9+Math.random()*1.1)+'rem';
+        h.style.animationDuration=(1.4+Math.random())+'s';
+        document.body.appendChild(h);setTimeout(()=>h.remove(),2500);
+      },i*90+j*200);
+    }
+  });
+}
+
+// COUNTERS
+function updateCounters(){
+  const diff=new Date()-new Date('2026-05-02T00:00:00');
+  document.getElementById('days-count').textContent=Math.floor(diff/86400000);
+  document.getElementById('hours-count').textContent=Math.floor(diff/3600000);
+}
+updateCounters();setInterval(updateCounters,60000);
+
+// SCROLL FADE
+new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='fadeUp .8s ease both';});
+},{threshold:.1}).observe&&document.querySelectorAll('.chapter,.stat,.g-item').forEach(el=>{
+  new IntersectionObserver((ens)=>{ens.forEach(en=>{if(en.isIntersecting)en.target.style.animation='fadeUp .8s ease both';});},{threshold:.1}).observe(el);
+});
+</script>
+</body>
+</html>

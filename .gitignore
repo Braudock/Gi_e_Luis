@@ -1,0 +1,10 @@
+# Excluir arquivos de áudio pesados (MP3 >50MB)
+*.mp3
+
+# Arquivos desnecessários
+*.html.bak
+index_1.html
+index_2.html
+index_3.html
+Thumbs.db
+.DS_Store
