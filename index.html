@@ -166,14 +166,7 @@ footer p{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gol
   <button class="lb-n" onclick="lbNav(1)">&#8594;</button>
 </div>
 
-<!-- MODAL -->
-<div id="modal">
-  <div class="modal-box">
-    <h2>Eu te amo</h2>
-    <p>Em qualquer dança.<br/>Em qualquer vida.<br/>Sempre você.</p>
-    <button class="modal-x" onclick="closeModal()">Fechar</button>
-  </div>
-</div>
+
 
 <main>
 
@@ -267,7 +260,6 @@ footer p{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gol
     <div class="divider"></div>
     <p class="promise-text">"Quero descobrir contigo cada compasso.<br/>Aprender contigo cada passo.<br/>E me perder contigo, vez após vez,<br/>a cada olhar — como naquela primeira noite no Pietro."</p>
     <span class="promise-sig">Luis</span>
-    <button class="heart-btn" onclick="openModal()">💕 Declarar Amor</button>
   </section>
 
 </main>
@@ -338,23 +330,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape')closeLb();
 });
 
-// MODAL
-function openModal(){document.getElementById('modal').classList.add('open');spawnHearts();}
-function closeModal(){document.getElementById('modal').classList.remove('open');}
-function spawnHearts(){
-  ['💕','✨','💖','🌹','💫','❤️'].forEach((e,i)=>{
-    for(let j=0;j<3;j++){
-      setTimeout(()=>{
-        const h=document.createElement('div');
-        h.className='hp';h.textContent=e;
-        h.style.left=Math.random()*100+'vw';h.style.bottom='8vh';
-        h.style.fontSize=(0.9+Math.random()*1.1)+'rem';
-        h.style.animationDuration=(1.4+Math.random())+'s';
-        document.body.appendChild(h);setTimeout(()=>h.remove(),2500);
-      },i*90+j*200);
-    }
-  });
-}
+
 
 // COUNTERS
 function updateCounters(){
