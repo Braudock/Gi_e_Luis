@@ -1,5 +1,6 @@
-# Excluir arquivos de áudio pesados (MP3 >50MB)
-*.mp3
+# Ignorar arquivos de áudio pesados (exceto a música do site)
+Ne-Yo*.mp3
+musica.mp3
 
 # Arquivos desnecessários
 *.html.bak
