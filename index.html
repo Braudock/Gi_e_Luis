@@ -121,16 +121,10 @@ footer p{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gol
   <button class="enter-btn" onclick="enterSite()">Entrar</button>
 </div>
 
-<!-- VIDEO BACKGROUND (sem som - muted) -->
+<!-- VIDEO BACKGROUND (sem som - muted, sem loop para rotação via JS) -->
 <div id="video-bg">
-  <video id="bg-video" autoplay muted loop playsinline>
+  <video id="bg-video" autoplay muted playsinline preload="auto">
     <source src="VIDEO_1.mp4" type="video/mp4"/>
-    <source src="VIDEO_3.mp4" type="video/mp4"/>
-    <source src="VIDEO_4.mp4" type="video/mp4"/>
-    <source src="VIDEO_5.mp4" type="video/mp4"/>
-    <source src="VIDEO_6.mp4" type="video/mp4"/>
-    <source src="VIDEO1.mp4" type="video/mp4"/>
-    <source src="VIDEO2.mp4" type="video/mp4"/>
   </video>
 </div>
 <div class="overlay"></div>
@@ -255,15 +249,43 @@ footer p{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gol
 <footer><p>Feito com amor para Paula &amp; Luis · 02.05.2026</p></footer>
 
 <script>
+// ── VÍDEO BG com rotação entre vídeos ────────────────────────────────────────
+const bgVideos = [
+  'VIDEO_1.mp4','VIDEO_3.mp4','VIDEO_4.mp4',
+  'VIDEO_5.mp4','VIDEO_6.mp4','VIDEO1.mp4','VIDEO2.mp4'
+];
+let bgVideoIdx = 0;
+const bgVideo = document.getElementById('bg-video');
+
+function loadVideo(idx) {
+  bgVideo.src = bgVideos[idx];
+  bgVideo.load();
+  bgVideo.play().catch(() => {});
+}
+
+bgVideo.addEventListener('ended', () => {
+  bgVideoIdx = (bgVideoIdx + 1) % bgVideos.length;
+  loadVideo(bgVideoIdx);
+});
+
+bgVideo.addEventListener('error', () => {
+  bgVideoIdx = (bgVideoIdx + 1) % bgVideos.length;
+  loadVideo(bgVideoIdx);
+});
+
 // ── ÁUDIO LOCAL ──────────────────────────────────────────────────────────────
 const audio = document.getElementById('bg-audio');
 let musicOn = false;
 
 function playMusic() {
-  audio.play().catch(() => {});
-  musicOn = true;
-  document.getElementById('ico-play').style.display = 'none';
-  document.getElementById('ico-pause').style.display = 'block';
+  const p = audio.play();
+  if (p !== undefined) {
+    p.then(() => {
+      musicOn = true;
+      document.getElementById('ico-play').style.display = 'none';
+      document.getElementById('ico-pause').style.display = 'block';
+    }).catch(() => {});
+  }
 }
 
 function pauseMusic() {
@@ -277,27 +299,12 @@ function toggleMusic() {
   if (musicOn) pauseMusic(); else playMusic();
 }
 
-// ── VÍDEO BG com rotação entre vídeos ────────────────────────────────────────
-const bgVideos = [
-  'VIDEO_1.mp4','VIDEO_3.mp4','VIDEO_4.mp4',
-  'VIDEO_5.mp4','VIDEO_6.mp4','VIDEO1.mp4','VIDEO2.mp4'
-];
-let bgVideoIdx = 0;
-const bgVideo = document.getElementById('bg-video');
-
-bgVideo.addEventListener('ended', () => {
-  bgVideoIdx = (bgVideoIdx + 1) % bgVideos.length;
-  bgVideo.src = bgVideos[bgVideoIdx];
-  bgVideo.load();
-  bgVideo.play().catch(() => {});
-});
-
 // ── ENTRAR ───────────────────────────────────────────────────────────────────
 function enterSite() {
   const intro = document.getElementById('intro');
   intro.classList.add('hidden');
   setTimeout(() => intro.style.display = 'none', 1300);
-  bgVideo.play().catch(() => {});
+  loadVideo(0);
   playMusic();
 }
 
