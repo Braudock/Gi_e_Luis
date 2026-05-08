@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Paula & Luis | Nossa Eternidade</title>
+<title>Paula &amp; Luis | Nossa Eternidade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -91,17 +91,6 @@ main{position:relative;z-index:10}
 .promise{padding:110px 24px;text-align:center}
 .promise-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2vw,1.55rem);line-height:2;color:rgba(240,232,223,.85);font-style:italic;max-width:680px;margin:0 auto 40px}
 .promise-sig{font-family:'Great Vibes',cursive;font-size:3rem;color:var(--gold);margin-bottom:40px;display:block}
-.heart-btn{padding:15px 44px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.05rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .4s}
-.heart-btn:hover{background:var(--gold);color:var(--dark)}
-
-/* MODAL */
-#modal{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;text-align:center}
-#modal.open{display:flex}
-.modal-box{padding:56px 36px;border:1px solid rgba(201,169,110,.3);max-width:460px;backdrop-filter:blur(20px)}
-.modal-box h2{font-family:'Great Vibes',cursive;font-size:3.8rem;color:var(--gold);margin-bottom:16px}
-.modal-box p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold-light);line-height:1.9;font-style:italic}
-.modal-x{margin-top:28px;padding:10px 30px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1rem;letter-spacing:2px;cursor:pointer;border-radius:2px;transition:all .3s}
-.modal-x:hover{background:var(--gold);color:var(--dark)}
 
 /* FOOTER */
 footer{padding:40px 24px;text-align:center;border-top:1px solid rgba(201,169,110,.1)}
@@ -132,24 +121,25 @@ footer p{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gol
   <button class="enter-btn" onclick="enterSite()">Entrar</button>
 </div>
 
-<!-- VIDEO BACKGROUND (local) -->
+<!-- VIDEO BACKGROUND (sem som - muted) -->
 <div id="video-bg">
   <video id="bg-video" autoplay muted loop playsinline>
-    <source src="gemini_generated_video_008672ca.mp4" type="video/mp4"/>
-    <source src="gemini_generated_video_27b83ec3.mp4" type="video/mp4"/>
-    <source src="VID-20260506-WA0054.mp4" type="video/mp4"/>
+    <source src="VIDEO_1.mp4" type="video/mp4"/>
+    <source src="VIDEO_3.mp4" type="video/mp4"/>
+    <source src="VIDEO_4.mp4" type="video/mp4"/>
+    <source src="VIDEO_5.mp4" type="video/mp4"/>
+    <source src="VIDEO_6.mp4" type="video/mp4"/>
+    <source src="VIDEO1.mp4" type="video/mp4"/>
+    <source src="VIDEO2.mp4" type="video/mp4"/>
   </video>
 </div>
 <div class="overlay"></div>
 <div class="grain"></div>
 
-<!-- AUDIO: YouTube player oculto (Ne-Yo Tiny Desk) -->
-<iframe id="yt-audio"
-  src="about:blank"
-  style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;top:-9999px"
-  allow="autoplay; encrypted-media"
-  frameborder="0">
-</iframe>
+<!-- AUDIO: Música local em loop -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="meu_trecho_de_musica.mp3" type="audio/mpeg"/>
+</audio>
 
 <!-- MUSIC BTN -->
 <div class="music-label">Nossa Vibe</div>
@@ -165,8 +155,6 @@ footer p{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gol
   <img id="lb-img" src="" alt=""/>
   <button class="lb-n" onclick="lbNav(1)">&#8594;</button>
 </div>
-
-
 
 <main>
 
@@ -267,84 +255,119 @@ footer p{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--gol
 <footer><p>Feito com amor para Paula &amp; Luis · 02.05.2026</p></footer>
 
 <script>
-// YouTube Audio IDs (Ne-Yo Tiny Desk — fallbacks)
-const audioIds = ['1G8DFGDEu50','gZtzidklVIY','uRjaQCuKLTs'];
-let audioIdx = 0, ytPlayer = null, musicOn = false;
+// ── ÁUDIO LOCAL ──────────────────────────────────────────────────────────────
+const audio = document.getElementById('bg-audio');
+let musicOn = false;
 
-function loadYTAudio(idx) {
-  const fr = document.getElementById('yt-audio');
-  fr.src = `https://www.youtube.com/embed/${audioIds[idx]}?autoplay=1&controls=0&loop=1&playlist=${audioIds[idx]}&enablejsapi=1`;
+function playMusic() {
+  audio.play().catch(() => {});
+  musicOn = true;
+  document.getElementById('ico-play').style.display = 'none';
+  document.getElementById('ico-pause').style.display = 'block';
 }
 
-// ENTER
+function pauseMusic() {
+  audio.pause();
+  musicOn = false;
+  document.getElementById('ico-play').style.display = 'block';
+  document.getElementById('ico-pause').style.display = 'none';
+}
+
+function toggleMusic() {
+  if (musicOn) pauseMusic(); else playMusic();
+}
+
+// ── VÍDEO BG com rotação entre vídeos ────────────────────────────────────────
+const bgVideos = [
+  'VIDEO_1.mp4','VIDEO_3.mp4','VIDEO_4.mp4',
+  'VIDEO_5.mp4','VIDEO_6.mp4','VIDEO1.mp4','VIDEO2.mp4'
+];
+let bgVideoIdx = 0;
+const bgVideo = document.getElementById('bg-video');
+
+bgVideo.addEventListener('ended', () => {
+  bgVideoIdx = (bgVideoIdx + 1) % bgVideos.length;
+  bgVideo.src = bgVideos[bgVideoIdx];
+  bgVideo.load();
+  bgVideo.play().catch(() => {});
+});
+
+// ── ENTRAR ───────────────────────────────────────────────────────────────────
 function enterSite() {
   const intro = document.getElementById('intro');
   intro.classList.add('hidden');
   setTimeout(() => intro.style.display = 'none', 1300);
-  document.getElementById('bg-video').play().catch(()=>{});
-  loadYTAudio(audioIdx);
-  musicOn = true;
-  document.getElementById('ico-play').style.display='none';
-  document.getElementById('ico-pause').style.display='block';
+  bgVideo.play().catch(() => {});
+  playMusic();
 }
 
-// MUSIC TOGGLE
-function toggleMusic(){
-  const fr=document.getElementById('yt-audio');
-  const ip=document.getElementById('ico-play'),ipa=document.getElementById('ico-pause');
-  if(musicOn){
-    fr.src='about:blank'; musicOn=false;
-    ip.style.display='block'; ipa.style.display='none';
-  } else {
-    loadYTAudio(audioIdx); musicOn=true;
-    ip.style.display='none'; ipa.style.display='block';
-  }
-}
-
-// GALLERY
-const photos=[
-  '1778079239145.png','1778079454513.png','1778079605066.png',
-  '1778079900693.png','1778079900693 (1).png','1778080251852.png',
-  '1778080329092.png','1778080588991.png','1778080778987.png',
-  '1778081067634.png','1778081067634 (1).png','1778081232072.png',
-  '1778081357066.png'
+// ── GALERIA ──────────────────────────────────────────────────────────────────
+const photos = [
+  // Fotos novas (PNG de WhatsApp/AI)
+  '1778046446659.png','1778046498941.png','1778046539783.png',
+  '1778046640412.png','1778046699827.png','1778046936082.png',
+  '1778047014851.png','1778079605066.png','1778079900693.png',
+  '1778080251852.png','1778080329092.png','1778080588991.png',
+  '1778080778987.png','1778081067634.png','1778081232072.png',
+  '1778081357066.png','1778119989345.png','1778126218078.png',
+  '1778126669592.png','1778128638172.png','1778128708698.png',
+  '1778129424509.png','1778129866452.png','1778129973922.png',
+  '1778130029929.png','1778130181936.png','1778130346762.png',
+  '1778157931830.png','1778158027212.png','1778159750125.png',
+  '1778168656622.png','1778169055940.png','1778169421044.png',
+  '1778169601509.png','1778169793708.png','1778170060741.png',
+  '1778170210966.png','1778170467527.png','1778170616872.png',
+  '1778170750419.png','1778171037901.png','1778171283424.png',
+  '1778171395241.png','1778171473482.png','1778172868578.png',
+  '1778173856881.png','1778187656821.png','1778187866990.png',
+  '1778188005310.png','1778188417578.png','1778188537162.png',
+  '1778188831925.png','1778191784295.png','1778191873049.png',
+  '1778192253757.png','1778192728145.png','1778192913732.png',
+  '1778193291852.png','1778193654011.png','1778194106378.png',
+  '1778194619717.png','1778194767725.png','1778194858810.png',
+  '1778195000093.png','1778195221092.png','1778195703559.png',
+  '1778195809129.png','1778196034769.png','1778196123566.png',
+  // Fotos JPG (câmera)
+  '20260505_213602.jpg','20260505_213619.jpg','20260505_213621.jpg',
+  '20260505_213718.jpg','20260505_213724.jpg','20260505_222922.jpg',
+  '20260505_222924.jpg','20260505_222926.jpg','20260505_222932.jpg',
+  '20260505_222936.jpg','20260505_222938.jpg'
 ];
-const grid=document.getElementById('gallery');
-photos.forEach((src,i)=>{
-  const d=document.createElement('div');
-  d.className='g-item';
-  d.innerHTML=`<img src="${src}" alt="Foto ${i+1}" loading="lazy" onerror="this.parentElement.style.display='none'"/>`;
-  d.onclick=()=>openLb(i);
+
+const grid = document.getElementById('gallery');
+photos.forEach((src, i) => {
+  const d = document.createElement('div');
+  d.className = 'g-item';
+  d.innerHTML = `<img src="${src}" alt="Foto ${i+1}" loading="lazy" onerror="this.parentElement.style.display='none'"/>`;
+  d.onclick = () => openLb(i);
   grid.appendChild(d);
 });
 
-// LIGHTBOX
-let lbI=0;
-function openLb(i){lbI=i;document.getElementById('lb-img').src=photos[i];document.getElementById('lb').classList.add('open');}
-function closeLb(){document.getElementById('lb').classList.remove('open');}
-function lbNav(d){lbI=(lbI+d+photos.length)%photos.length;document.getElementById('lb-img').src=photos[lbI];}
-document.addEventListener('keydown',e=>{
-  if(!document.getElementById('lb').classList.contains('open'))return;
-  if(e.key==='ArrowLeft')lbNav(-1);
-  if(e.key==='ArrowRight')lbNav(1);
-  if(e.key==='Escape')closeLb();
+// ── LIGHTBOX ─────────────────────────────────────────────────────────────────
+let lbI = 0;
+function openLb(i) { lbI = i; document.getElementById('lb-img').src = photos[i]; document.getElementById('lb').classList.add('open'); }
+function closeLb() { document.getElementById('lb').classList.remove('open'); }
+function lbNav(d) { lbI = (lbI + d + photos.length) % photos.length; document.getElementById('lb-img').src = photos[lbI]; }
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lb').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') lbNav(-1);
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'Escape') closeLb();
 });
 
-
-
-// COUNTERS
-function updateCounters(){
-  const diff=new Date()-new Date('2026-05-02T00:00:00');
-  document.getElementById('days-count').textContent=Math.floor(diff/86400000);
-  document.getElementById('hours-count').textContent=Math.floor(diff/3600000);
+// ── CONTADORES ───────────────────────────────────────────────────────────────
+function updateCounters() {
+  const diff = new Date() - new Date('2026-05-02T00:00:00');
+  document.getElementById('days-count').textContent = Math.floor(diff / 86400000);
+  document.getElementById('hours-count').textContent = Math.floor(diff / 3600000);
 }
-updateCounters();setInterval(updateCounters,60000);
+updateCounters(); setInterval(updateCounters, 60000);
 
-// SCROLL FADE
-new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='fadeUp .8s ease both';});
-},{threshold:.1}).observe&&document.querySelectorAll('.chapter,.stat,.g-item').forEach(el=>{
-  new IntersectionObserver((ens)=>{ens.forEach(en=>{if(en.isIntersecting)en.target.style.animation='fadeUp .8s ease both';});},{threshold:.1}).observe(el);
+// ── SCROLL FADE ───────────────────────────────────────────────────────────────
+document.querySelectorAll('.chapter,.stat,.g-item').forEach(el => {
+  new IntersectionObserver((ens) => {
+    ens.forEach(en => { if (en.isIntersecting) en.target.style.animation = 'fadeUp .8s ease both'; });
+  }, { threshold: .1 }).observe(el);
 });
 </script>
 </body>
